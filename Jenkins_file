@@ -7,7 +7,7 @@ pipeline {
  stage('Checkout'){
  steps{
  echo 'Checkout Git URL'
- git branch: 'master', url:'https://github.com/Srija1991/star-agile-insurance-project.git'
+ git branch: 'master', url:'https://github.com/Srija1991/Insure-me.git'
  }
  }
  stage('Package the application'){
