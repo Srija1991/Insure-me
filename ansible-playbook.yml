@@ -5,7 +5,10 @@
   tasks : 
   - name: updating apt
     command : sudo apt-get update
-
+    
+  - name: Install Python and PIP
+    command: sudo apt install -y python-pip
+    
   - name : Install Docker
     command : sudo apt-get install -y docker.io
     become : yes
