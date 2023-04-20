@@ -1,0 +1,47 @@
+pipeline {
+ agent any
+ tools {
+ maven 'Maven'
+ }
+ stages{
+ stage('Checkout'){
+ steps{
+ echo 'Checkout Git URL'
+ git branch: 'master', url:'https://github.com/Srija1991/star-agile-insurance-project.git'
+ }
+ }
+ stage('Package the application'){
+ steps{
+ echo "Packaging the application"
+ sh 'mvn clean package'
+ }
+ }
+ stage('Publish the Reports using HTML'){
+ steps{
+ echo "Publishing The Reports"
+ publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/INSU_PROJ/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Reports', useWrapperFileDirectly: true])
+ }
+ }
+ stage('Docker Image creation'){
+ steps{
+ sh 'docker build -t srija1991/insureme .'
+ }
+ }
+ stage('docker login'){
+ steps{
+ withCredentials([usernamePassword(credentialsId: 'docker_login', passwordVariable: 'docker_pswd', usernameVariable: 'docker_usr')]) {
+ sh "docker login -u ${env.docker_usr} -p ${env.docker_pswd}"
+}
+}
+}
+stage('Push Image to docker Hub'){
+steps{
+sh 'docker push srija1991/insureme'
+}
+}
+stage('Deploy using ansible'){
+steps{
+ansiblePlaybook credentialsId: 'ansible_3', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'}
+}
+}
+}
