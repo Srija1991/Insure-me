@@ -44,7 +44,7 @@ echo "*********************************************Image pushed succesfully onto
 }
 stage('Deploy using ansible'){
 steps{
-ansiblePlaybook credentialsId: 'ansible_3', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
+ansiblePlaybook credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
 echo "************************************Deployment onto Server is Sucessful**********************************"
 }
 }
