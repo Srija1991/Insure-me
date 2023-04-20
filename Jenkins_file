@@ -19,7 +19,7 @@ pipeline {
  stage('Publish the Reports using HTML'){
  steps{
  echo "Publishing The Reports"
- publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/INSU_PROJ/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Reports', useWrapperFileDirectly: true])
+ publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Insure_me/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Reports', useWrapperFileDirectly: true])
  }
  }
  stage('Docker Image creation'){
