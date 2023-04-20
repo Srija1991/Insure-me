@@ -30,7 +30,7 @@ pipeline {
  }
  stage('docker login'){
  steps{
- withCredentials([usernamePassword(credentialsId: 'logindocker', passwordVariable: 'docker_pswd', usernameVariable: 'docker_usr')]) {
+ withCredentials([usernamePassword(credentialsId: 'logindocker', passwordVariable: 'docker_pswd', usernameVariable: 'docker_usr')]){
  sh 'docker login -u ${env.docker_usr} -p ${env.docker_pswd}'
  echo "*******************************Docker LOGIN Successful***************************************************"
 }
