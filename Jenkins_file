@@ -6,25 +6,25 @@ pipeline {
  stages{
  stage('Checkout'){
  steps{
- echo 'Checkout Git URL'
+ echo '****************Checkout Git URL************************************'
  git branch: 'master', url:'https://github.com/Srija1991/Insure-me.git'
  }
  }
  stage('Package the application'){
  steps{
- echo "Packaging the application"
+ echo "***********************Packaging the application*********************************"
  sh 'mvn clean package'
  }
  }
  stage('Publish the Reports using HTML'){
  steps{
- echo "Publishing The HTML Reports"
+ echo "****************************************Publishing The HTML Reports****************************************"
  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Insure_me/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: 'Reports', useWrapperFileDirectly: true])
  }
  }
  stage('Docker Image creation'){
  steps{
- echo "Docker image is created"
+ echo "************************************Docker image is created**************************************"
  sh 'docker build -t srija1991/insureme .'
  }
  }
@@ -32,21 +32,24 @@ pipeline {
  steps{
  withCredentials([usernamePassword(credentialsId: 'docker_login', passwordVariable: 'docker_pswd', usernameVariable: 'docker_usr')]) {
  sh "docker login -u ${env.docker_usr} -p ${env.docker_pswd}"
- echo "Docker LOGIN Successful"
+ echo "*******************************Docker LOGIN Successful***************************************************"
 }
 }
 }
 stage('Push Image to docker Hub'){
 steps{
 sh 'docker push srija1991/insureme'
-echo "Image pushed succesfully onto DockerHUB"
+echo "*********************************************Image pushed succesfully onto DockerHUB************************************************"
 }
 }
 stage('Deploy using ansible'){
 steps{
 ansiblePlaybook credentialsId: 'ansible_3', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'
-echo "Deployment onto Server is Sucessful"
+echo "************************************Deployment onto Server is Sucessful**********************************"
 }
 }
 }
 }
+
+
+
