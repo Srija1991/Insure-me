@@ -41,7 +41,7 @@ sh 'docker push srija1991/insureme'
 }
 stage('Deploy using ansible'){
 steps{
-ansiblePlaybook credentialsId: 'ansible_3', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'deploy.yml'}
+ansiblePlaybook credentialsId: 'ansible_3', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml'}
 }
 }
 }
